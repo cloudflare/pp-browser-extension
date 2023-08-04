@@ -17,7 +17,7 @@ const COMMITMENT_URL =
 const QUALIFIED_BODY_PARAMS = ['md'];
 
 const CHL_BYPASS_SUPPORT = 'cf-chl-bypass';
-const DEFAULT_ISSUING_HOSTNAME = 'captcha.website';
+const DEFAULT_ISSUING_HOSTNAME = 'issuance.privacypass.cloudflare.com';
 
 const REFERER_QUERY_PARAM = '__cf_chl_tk';
 const QUERY_PARAM = '__cf_chl_f_tk';
