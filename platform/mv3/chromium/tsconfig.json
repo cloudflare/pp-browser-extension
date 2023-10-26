@@ -1,0 +1,11 @@
+{
+    "extends": "../../../tsconfig.json",
+    "compilerOptions": {
+        "resolveJsonModule": true
+    },
+    "include": [
+        ".",
+        "../../../src/background",
+        "../../../src/common"
+    ]
+}

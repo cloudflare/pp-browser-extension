@@ -13,12 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18, 16]
+        node-version: [20, 18, 16]
     steps:
       - name: Checking out
-        uses: actions/checkout@v3
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
       - name: Setup Node v${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3
         with:
           node-version: ${{ matrix.node-version }}
       - name: Installing

@@ -3,5 +3,9 @@
     "compilerOptions": {
         "resolveJsonModule": true
     },
-    "include": [ ".", "../common" ]
+    "include": [
+        ".",
+        "../../src/background",
+        "../../src/common"
+    ]
 }

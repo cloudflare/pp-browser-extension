@@ -2,11 +2,21 @@
 [![Privacy Pass](https://github.com/privacypass/challenge-bypass-extension/actions/workflows/action.yml/badge.svg)](https://github.com/privacypass/challenge-bypass-extension/actions)
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
-# Privacy Pass Extension
+# Silk - Privacy Pass Client for the browser
 
 ![Privacy Pass logo](./public/icons/128/gold.png)
 
-This browser extension implements the client-side of the Privacy Pass protocol providing unlinkable cryptographic tokens. For example, these tokens can be used on Cloudflare-protected websites to redeem a token instead of solving a CAPTCHA.
+This browser extension implements the client-side of the Privacy Pass protocol providing unlinkable cryptographic tokens.
+
+**Specification:* Compliant with IETF [draft-ietf-privacypass-protocol v11](https://datatracker.ietf.org/doc/draft-ietf-privacypass-protocol/).
+
+**Support:**
+
+* ✅ Public-Verifiable tokens (Blind-RSA)
+* 🚧 Private-Verifiable tokens (VOPRF)
+* 🚧 Batched tokens
+* 🚧 Rate limited tokens
+
 
 Home page: **[https://privacypass.github.io][pp-home]**
 
@@ -18,22 +28,18 @@ Home page: **[https://privacypass.github.io][pp-home]**
 
 ## How it works?
 
-**Privacy Pass Providers:**  🟩 [Cloudflare][cf-url]  🟩 [hCaptcha][hc-url]
+**Privacy Pass Attesters:**  🟩 [Cloudflare Research with Turnstile][cf-url]
 
 [pp-home]: https://privacypass.github.io/
-[cf-url]: https://issuance.privacypass.cloudflare.com/
-[hc-url]: https://www.hcaptcha.com/privacy-pass/
+[cf-url]: https://pp-attester-turnstile.research.cloudflare.com/
 [chrome-store]: https://chrome.google.com/webstore/detail/privacy-pass/ajhmfdgkijocedmfjonnpjfojldioehi/
 [firefox-store]: https://addons.mozilla.org/firefox/addon/privacy-pass/
 
 **Get tokens**
- - Click on the extension icon, and click on top of one of the **providers**.
- - One page will open with a CAPTCHA to be solved.
- - Solve successfully the CAPTCHA and the extenison will get some tokens.
+ - If a website requests a Privacy Pass token, the extension is automatically going to request you to perform the associated challenge.
+ - One page will open with a challenge to be solved.
+ - Solve successfully the challenge and the extension will get **one** token.
 
-**Use tokens**
- - When a page shows a CAPTCHA from one of the **providers**, and if the extension has tokens, the browser uses a token to pass the provider's challenge without any interaction.
- - Otherwise, the user must solve the CAPTCHA, which grants some tokens for future use.
 
 See [FAQs](#faqs) and [Known Issues](#known-issues) section: if something is not working as expected.
 
@@ -102,25 +108,31 @@ npm test
 
 **2022** -- The Privacy Pass protocol can also use RSA blind signatures.
 
+**2023** -- The extension updates to Privacy Pass Protocol draft 16, with the cryptographic part in a dedicated library [cloudflare/privacypass-ts](https://github.com/cloudflare/privacypass-ts). Introducing the notion of Attesters and Issuers.
+
 #### Acknowledgements
 
 The creation of the Privacy Pass protocol was a joint effort by the team made up of George Tankersley, Ian Goldberg, Nick Sullivan, Filippo Valsorda, and Alex Davidson.
 
-The Privacy Pass team would like to thank Eric Tsai for creating the logo and extension design, Dan Boneh for helping us develop key parts of the protocol, as well as Peter Wu and Blake Loring for their helpful code reviews. We would also like to acknowledge Sharon Goldberg, Christopher Wood, Peter Eckersley, Brian Warner, Zaki Manian, Tony Arcieri, Prateek Mittal, Zhuotao Liu, Isis Lovecruft, Henry de Valence, Mike Perry, Trevor Perrin, Zi Lin, Justin Paine, Marek Majkowski, Eoin Brady, Aaran McGuire, Suphanat Chunhapanya, Armando Faz Hernández, Benedikt Wolters, Maxime Guerreiro, and many others who were involved in one way or another and whose efforts are appreciated.
+The Privacy Pass team would like to thank Eric Tsai for creating the logo and extension design, Dan Boneh for helping us develop key parts of the protocol, as well as Peter Wu and Blake Loring for their helpful code reviews. We would also like to acknowledge Sharon Goldberg, Christopher Wood, Peter Eckersley, Brian Warner, Zaki Manian, Tony Arcieri, Prateek Mittal, Zhuotao Liu, Isis Lovecruft, Henry de Valence, Mike Perry, Trevor Perrin, Zi Lin, Justin Paine, Marek Majkowski, Eoin Brady, Aaran McGuire, Suphanat Chunhapanya, Armando Faz Hernández, Benedikt Wolters, Maxime Guerreiro, Cefan Rubin, Thibault Meunier and many others who were involved in one way or another and whose efforts are appreciated.
 
 ---
 
 ## FAQs
 
-#### What do I have to do to acquire new passes?
-
-1. Click "Get More Passes" in the extension pop-up.
-1. Solve the CAPTCHA that is presented on the webpage.
-1. Your extension should be populated with new passes.
-
-#### Are passes stored after a browser restart?
+#### As a user, how can I add new attestation methods
 
 Depending on your browser settings, the local storage of your browser may be cleared when it is restarted. Privacy Pass stores passes in local storage and so these will also be cleared. This behavior may also be observed if you clear out the cache of your browser.
+
+#### My website support Privacy Pass authentication scheme, but the extension does nothing
+
+This can be an issuer issue, or a Chrome issue. In the later case, make sure you implement a [client replay on your website](#chrome-support-via-client-replay-api).
+
+#### As a service operator, how to roll out out my own attestation method
+
+Privacy Pass does not propose a standard attester API. This extension relies on attester to implement the [cloudflare/pp-attester](https://github.com/cloudflare/pp-attester) API.
+
+If you have such an attester, you should ask your user to update their attesters in the extension options. The attester order matters, first one has a higher priority than the second.
 
 ---
 
@@ -132,6 +144,68 @@ There is a [conflict resolution](https://developer.chrome.com/docs/extensions/re
 
 Compounded to that, Cloudflare will ignore clearance cookies when the user-agent request does not match the one used when obtaining the cookie.
 
-#### hCaptcha support
+## Chrome support via Client replay API
 
-As of version 3.0.4, support for hCaptcha tokens has been re-enabled. Note: even though an hCaptcha captcha consumes one token from the extension, it is still possible that the user must solve an interactive captcha. This behaviour depends on the logic used by the captcha provider, and does not indicate a malfunctioning of the PrivacyPass extension.
+### Overview
+
+Chrome does not allow extensions to block a request and perform another action, such as completing an attestation flow. To this extent, the extension enables websites to orchestrate a client side replay as defined below.
+
+### Requirements
+
+Your website fetches subressources with JavaScript. If your server returns a challenge on the main frame, the extension automatically refreshes the page without any action needed from your side.
+
+### System definition
+
+On every request, the extension adds header `Private-Token-Client-Replay: <requestID>`. `requestID` is a UUID identifying your next replay attempt.
+For resources you know need to be replayed because they contain a `WWW-Authenticate: PrivateToken ...` header, you are going to use this `requestID` to query the extension on the state of the associated token retrieval. Once the extension has retrieved the token, you can replay the request.
+
+Given a `requestID`, you can query `https://no-reply.private-token.research.cloudflare.com/requestID/<requestID>`. The domain `no-reply.private-token.research.cloudflare.com` [does not resolve](https://dnsviz.net/d/no-reply.private-token.research.cloudflare.com/dnssec/) to an IP address, and is captured by the browser extension for replay purposes. Its reply is always going to be a redirect to a ["data" URL](https://www.rfc-editor.org/rfc/rfc2397#section-2) of the form `data:text/plain,<status>`.
+
+**`GET /requestID/<requestID>`**
+* Response URL: `data:text/plain,<status>`
+* `status` is `pending`, `fulfilled`, `not-found`
+
+Your website should do the following depending on the returned `status`:
+* if `pending`, wait and query `/requestID/<requestID>` again in the future
+* if `fulfilled`, replay the initial request
+* if `not-found`, cancel the initial request
+
+A sequence diagram illustrate the flow below
+
+```mermaid
+sequenceDiagram
+	participant E as Client
+	participant O as Origin
+	participant B as Extension
+	
+	E->>O: GET example.com/img.png
+	O->>B: WWW-Authenticate: challenge=[x]
+	Note over B: Cannot block request
+	B->>B: Adds "Private-Token-Client-Replay: requestID"
+	B->>E: 401 Unauthorized + "Private-Token-Client-Replay: requestID"
+	par Extension fetches token
+        Note over B: Interact with Attester to retrieve Token [x]
+	and Client wait
+        E->>E: Check "Private-Token-Client-Replay" header
+        E->>B: GET /requestID/<requestID>
+        B->>E: "200 data:text/plain,pending"
+	end
+    B->>E: "200 data:text/plain,fulfilled"
+    Note over E: Extension is ready to query the Origin
+    Note over B: Extension is intercepting request to example.com
+    E->>B: GET example.com/img.png
+	B->>O: GET example.com/img.png + Authorization [x]
+	O->>E: <data>Cat Picture</data>
+```
+
+### Design considerations
+
+The proposed replay mechanism has been contrained by [Chrome API reference](https://developer.chrome.com/docs/extensions/reference/), specifically the [declarativeNetRequest API](https://developer.chrome.com/docs/extensions/reference/declarativeNetRequest/).
+
+Specifically, the following choices have been engineered as follow
+* Use a dedicated replay domain to allow any website to query the extension without hardcoding its ID
+* Use a dedicated replay domain that does not resolve to prevent DoS risks, and ensure there are no traffic interception with a faulty extension
+* Have every parameter, namely `requestID` be part of the URL to allow for a synchronous response from the extension, headers not being available on every event
+* Redirect to a ["data" URL](https://www.rfc-editor.org/rfc/rfc2397#section-2) to prevent DNS resolution and other extensions interference
+* Return `Private-Token-Client-Replay: <requestID>` on every request due to the inability to dynamically append headers to responses in MV3
+* Use a pull based method to ease implementation on the extension and origin side

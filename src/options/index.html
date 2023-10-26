@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Privacy Pass Popup</title>
+  <link rel="stylesheet" href="index.css">
+  <script src="index.mjs" type="module"></script>
+</head>
+
+<body>
+  <main>
+    <section>
+      <label for="attesters">
+        Attesters URLs. One URL per line of the form <code>https://example.com</code>.
+      </label>
+      <textarea id="attesters" rows="5"></textarea>
+    </section>
+    <section>
+      <label for="serviceWorkerMode">
+        Development configuration.
+      </label>
+      <select id="serviceWorkerMode">
+        <option value="production">Production</option>
+        <option value="development">Development</option>
+        <option value="demo">Demo (Slow)</option>
+      </select>
+    </section>
+  </main>
+</body>
+
+</html>

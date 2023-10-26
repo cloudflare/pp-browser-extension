@@ -1,0 +1,36 @@
+{
+    "name": "Silk - Privacy Pass Client",
+    "manifest_version": 2,
+    "description": "Client support for Privacy Pass anonymous authorization protocol.",
+    "version": "4.0.0",
+    "icons": {
+        "32": "icons/32/gold.png",
+        "48": "icons/48/gold.png",
+        "64": "icons/64/gold.png",
+        "128": "icons/128/gold.png"
+    },
+    "background": {
+        "scripts": [
+            "background.js"
+        ]
+    },
+    "permissions": [
+        "<all_urls>",
+        "storage",
+        "tabs",
+        "webRequest",
+        "webRequestBlocking"
+    ],
+    "browser_action": {
+        "default_icon": "icons/32/grey.png",
+        "default_title": "Silk"
+    },
+    "options_ui": {
+        "page": "options/index.html"
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{48748554-4c01-49e8-94af-79662bf34d50}"
+        }
+    }
+}
