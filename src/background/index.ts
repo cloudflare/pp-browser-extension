@@ -236,9 +236,9 @@ export const handleHeadersReceived =
             initiator = details.url;
         } else {
             initiator =
-                details.initiator ??
                 details.frameAncestors?.at(0)?.url ??
-                cachedTabs[details.tabId]?.url;
+                cachedTabs[details.tabId]?.url ??
+                details.initiator;
         }
         if (!initiator) {
             return;

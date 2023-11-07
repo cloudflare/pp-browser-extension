@@ -1,5 +1,6 @@
 import {
     BROWSERS,
+    handleBeforeRequest,
     handleBeforeSendHeaders,
     handleHeadersReceived,
     handleInstall,
@@ -9,6 +10,8 @@ const BROWSER = BROWSERS.CHROME;
 const STORAGE = chrome.storage.local;
 
 chrome.runtime.onInstalled.addListener(handleInstall(STORAGE));
+
+chrome.webRequest.onBeforeRequest.addListener(handleBeforeRequest(), { urls: ['<all_urls>'] });
 
 chrome.webRequest.onBeforeSendHeaders.addListener(
     handleBeforeSendHeaders(STORAGE),
