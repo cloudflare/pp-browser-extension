@@ -40,7 +40,7 @@ body was fetched!!
 In a terminal:
 
 ```sh
-$ git clone https://github.com/armfazh/challenge-bypass-extension --branch = declNetReq
+$ git clone https://github.com/cloudflare/pp-browser-extension
 $ nvm use 18 // it should work with Node v16+.
 $ npm ci
 $ npm run build

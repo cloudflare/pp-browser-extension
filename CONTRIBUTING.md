@@ -4,8 +4,8 @@
 
 Code is written in TypeScript and is automatically formatted with prettier.
 
-```
- $ npm run lint -- --fix
+```bash
+npm run format
 ```
 
 ### Naming convention

@@ -3,7 +3,7 @@
 In a terminal:
 
 ```sh
-$ git clone https://github.com/armfazh/challenge-bypass-extension
+$ git clone https://github.com/cloudflare/pp-browser-extension
 $ nvm use 20 // it should work with Node v16+.
 $ npm ci
 $ npm run build
@@ -21,6 +21,6 @@ In Chrome:
 
 1. Open the Service worker & Devtools of a blank tab.
 
-1. Navigate to https://demo-origin.pat-issuer.cloudflare.com/type2 As you can see, we must specify type=2.
+1. Navigate to https://demo-pat.research.cloudflare.com/login.
 
-1. The behaviour expected is that browser first receives a 401 error, which is catched by the extension and then a reload that brings the body 'Token OK'.
+1. The behaviour expected is that browser first receives a 401 error, which is catched by the extension and then a reload that brings the body 'Token OK'. Chrome extension uses a replay mechanism documented in the [README](./README.md) as request blocking is not supported.
