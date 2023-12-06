@@ -1,11 +1,11 @@
 ---
-name: PrivacyPass Challenge Extension
+name: Silk Privacy Pass Client Extension
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   testing:

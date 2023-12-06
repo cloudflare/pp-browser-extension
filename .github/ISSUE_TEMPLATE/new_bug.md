@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-Before reporting a new bug, verify if your request is already being tracked by another issue: https://github.com/privacypass/challenge-bypass-extension/issues.
+Before reporting a new bug, verify if your request is already being tracked by another issue: https://github.com/cloudflare/pp-browser-extension/issues.
 
 ---
 
@@ -28,10 +28,10 @@ A description of what is expected to happen.
 
 **System (please complete the following information):**
  - OS: [e.g. iOS/Windows]
- - Cloudflare tokens or hCaptcha tokens?
- - Browser [e.g. chrome, firefox]
+ - Attesters configuration from extension options
+ - Browser [e.g. Chrome, Firefox]
  - Browser Version [e.g. 79, 80, ]
- - Privacy Pass Version [e.g. 2.0.4, 2.0.5 ]
+ - Silk Version [e.g. 4.0.0, 4.0.1 ]
 
 **Additional context**
 Add any other context about the problem here.

@@ -1,5 +1,5 @@
-[![github release](https://img.shields.io/github/release/privacypass/challenge-bypass-extension.svg)](https://github.com/privacypass/challenge-bypass-extension/releases/)
-[![Privacy Pass](https://github.com/privacypass/challenge-bypass-extension/actions/workflows/action.yml/badge.svg)](https://github.com/privacypass/challenge-bypass-extension/actions)
+[![github release](https://img.shields.io/github/release/cloudflare/pp-browser-extension.svg)](https://github.com/cloudflare/pp-browser-extension/releases/)
+[![Privacy Pass](https://github.com/cloudflare/pp-browser-extension/actions/workflows/action.yml/badge.svg)](https://github.com/cloudflare/pp-browser-extension/actions)
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 # Silk - Privacy Pass Client for the browser
@@ -18,8 +18,6 @@ This browser extension implements the client-side of the Privacy Pass protocol p
 * 🚧 Rate limited tokens
 
 
-Home page: **[https://privacypass.github.io][pp-home]**
-
 ## Installation
 
 | **[Chrome][chrome-store]** | **[Firefox][firefox-store]** |
@@ -30,7 +28,6 @@ Home page: **[https://privacypass.github.io][pp-home]**
 
 **Privacy Pass Attesters:**  🟩 [Cloudflare Research with Turnstile][cf-url]
 
-[pp-home]: https://privacypass.github.io/
 [cf-url]: https://pp-attester-turnstile.research.cloudflare.com/
 [chrome-store]: https://chrome.google.com/webstore/detail/privacy-pass/ajhmfdgkijocedmfjonnpjfojldioehi/
 [firefox-store]: https://addons.mozilla.org/firefox/addon/privacy-pass/
@@ -52,7 +49,7 @@ We recommend to install the extension using the official browser stores listed i
 ### Building
 
 ```sh
-git clone https://github.com/privacypass/challenge-bypass-extension
+git clone https://github.com/cloudflare/pp-browser-extension
 nvm use 16
 npm ci
 npm run build
@@ -98,17 +95,17 @@ npm test
 
 ### Highlights
 
-**2018** -- The Privacy Pass protocol is based on a _Verifiable, Oblivious Pseudorandom Function_ (VOPRF) first established by [Jarecki et al. 2014](https://eprint.iacr.org/2014/650.pdf). The details of the protocol were published at [PoPETS 2018](https://doi.org/10.1515/popets-2018-0026) paper authored by Alex Davidson, Ian Goldberg, Nick Sullivan, George Tankersley, and Filippo Valsorda.
-
-**2019** -- The captcha provider [hCaptcha](https://www.hcaptcha.com/privacy-pass) announced support for Privacy Pass, and the [v2](https://github.com/privacypass/challenge-bypass-extension/tree/2.0.0) version was released.
-
-**2020** -- The CFRG (part of IRTF/IETF) started a [working group](https://datatracker.ietf.org/wg/privacypass/about/) seeking for the standardization of the Privacy Pass protocol.
-
-**2021** -- In this [blog post](https://blog.cloudflare.com/privacy-pass-v3), we announced the [v3](https://github.com/privacypass/challenge-bypass-extension/tree/v3.0.0) version of this extension, which makes the code base more resilient, extensible, and maintainable.
+**2023** -- The extension updates to Privacy Pass Protocol draft 16, with the cryptographic part in a dedicated library [cloudflare/privacypass-ts](https://github.com/cloudflare/privacypass-ts). Introducing the notion of Attesters and Issuers.
 
 **2022** -- The Privacy Pass protocol can also use RSA blind signatures.
 
-**2023** -- The extension updates to Privacy Pass Protocol draft 16, with the cryptographic part in a dedicated library [cloudflare/privacypass-ts](https://github.com/cloudflare/privacypass-ts). Introducing the notion of Attesters and Issuers.
+**2021** -- In this [blog post](https://blog.cloudflare.com/privacy-pass-v3), we announced the [v3](https://github.com/cloudflare/pp-browser-extension/tree/v3.0.0) version of this extension, which makes the code base more resilient, extensible, and maintainable.
+
+**2020** -- The CFRG (part of IRTF/IETF) started a [working group](https://datatracker.ietf.org/wg/privacypass/about/) seeking for the standardization of the Privacy Pass protocol.
+
+**2019** -- The CAPTCHA provider [hCaptcha](https://www.hcaptcha.com/privacy-pass) announced support for Privacy Pass, and the [v2](https://github.com/cloudflare/pp-browser-extension/tree/2.0.0) version was released.
+
+**2018** -- The Privacy Pass protocol is based on a _Verifiable, Oblivious Pseudorandom Function_ (VOPRF) first established by [Jarecki et al. 2014](https://eprint.iacr.org/2014/650.pdf). The details of the protocol were published at [PoPETS 2018](https://doi.org/10.1515/popets-2018-0026) paper authored by Alex Davidson, Ian Goldberg, Nick Sullivan, George Tankersley, and Filippo Valsorda. Its homepage is still available at [https://privacypass.github.io](https://privacypass.github.io/).
 
 #### Acknowledgements
 

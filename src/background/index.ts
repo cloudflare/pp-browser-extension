@@ -228,6 +228,10 @@ export const handleHeadersReceived =
         }
 
         const settings = getSettings();
+        if (Object.keys(settings).length === 0) {
+            getRawSettings(storage);
+            return;
+        }
         const { attesters, serviceWorkerMode: mode } = settings;
         const logger = getLogger(mode);
 
