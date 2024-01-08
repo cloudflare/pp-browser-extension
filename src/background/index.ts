@@ -220,10 +220,14 @@ export const handleHeadersReceived =
             return;
         }
 
+        // Check if there's a valid PrivateToken header
         const privateTokenChl = details.responseHeaders.find(
             (x) => x.name.toLowerCase() == 'www-authenticate',
         )?.value;
         if (!privateTokenChl) {
+            return;
+        }
+        if (PrivateToken.parse(privateTokenChl).length === 0) {
             return;
         }
 
