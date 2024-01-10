@@ -21,10 +21,6 @@
         "webRequest",
         "webRequestBlocking"
     ],
-    "browser_action": {
-        "default_icon": "icons/32/grey.png",
-        "default_title": "Silk"
-    },
     "options_ui": {
         "page": "options/index.html"
     },
