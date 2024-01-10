@@ -20,9 +20,6 @@
         "tabs",
         "webRequest"
     ],
-    "action": {
-        "default_icon": "icons/32/gold.png"
-    },
     "options_ui": {
         "page": "options/index.html"
     },
