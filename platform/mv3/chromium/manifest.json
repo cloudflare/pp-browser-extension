@@ -3,7 +3,7 @@
     "manifest_version": 3,
     "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp+7N/GLYPSBqf+O7fGOaLQ+3hIvXrhsjo8Pq73aSVw08YZRWIIsM+xRnaqdgcu3dXgQGjuVbFVD0nQzg2ymOJk40PSZ/EDdbmWmvD6IrKV88qdmLAlMCvgYW6oRQG5EIBNrmUOqQvTHpdaHrYxY3g4OQfaCe5mvYS64VG6Tb9f1G/UqUcNQzdo1A7x6ElCMjl+isMkt1in749KxgCmhHlZshQfCf1tXwcjhh09luatwP+KCFqCw0VPNMij1eBHi+Z1r43o1RNSTVoiot4mXHMej/rZiApG3U0eVfhp6yOLLakNGnzy1hR5OO00vlMVSyg2HR4VnvPyJuZ+VRNGBo7wIDAQAB",
     "description": "Client support for Privacy Pass anonymous authorization protocol.",
-    "version": "4.0.0",
+    "version": "4.0.1",
     "icons": {
         "32": "icons/32/gold.png",
         "48": "icons/48/gold.png",
