@@ -64,6 +64,19 @@ export const headerToToken = async (
             // API expects interactive Challenge at /challenge
             attesterURI = `${attesterURI}/challenge`;
 
+            // To minimize the number of tabs opened, we check if the requesting tab is the focused tab
+            const tabInfo: chrome.tabs.Tab | undefined = await new Promise((resolve) => {
+                chrome.tabs.get(tabId, resolve);
+            });
+            const tabWindow: chrome.windows.Window | undefined = await new Promise((resolve) => {
+                if (tabInfo) {
+                    chrome.windows.get(tabInfo.windowId, resolve);
+                }
+            });
+            if (!tabWindow?.focused || !tabInfo?.active) {
+                logger.debug('Not opening a new tab due to requesting tab not being active');
+                return undefined;
+            }
             const tab: chrome.tabs.Tab = await new Promise((resolve) =>
                 chrome.tabs.create({ url: attesterURI }, resolve),
             );
