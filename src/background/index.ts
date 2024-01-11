@@ -298,7 +298,7 @@ export const handleHeadersReceived =
         }
         const redirectPromise = w3HeaderValue
             .then(async (value): Promise<void | chrome.webRequest.BlockingResponse> => {
-                if (value === null) {
+                if (!value) {
                     delete TOKENS[details.url];
                     return;
                 }
@@ -307,9 +307,7 @@ export const handleHeadersReceived =
                         getAuthorizationRule(details.url, `PrivateToken token=${value}`),
                     );
                 } else {
-                    if (value) {
-                        TOKENS[details.url] = value;
-                    }
+                    TOKENS[details.url] = value;
                 }
 
                 return { redirectUrl: details.url };
