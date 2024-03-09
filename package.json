@@ -11,7 +11,7 @@
     "license": "BSD-3-Clause",
     "type": "module",
     "engines": {
-        "node": ">=16"
+        "node": ">=18"
     },
     "scripts": {
         "build:options": "esbuild src/options/index.ts --bundle --minify --format=esm --target=chrome100 --outfile=dist/build/options/index.mjs && cp src/options/index.html src/options/index.css dist/build/options/",
@@ -33,19 +33,19 @@
         "@cloudflare/privacypass-ts": "0.4.0"
     },
     "devDependencies": {
-        "@types/chrome": "0.0.248",
-        "@types/jest": "29.5.6",
-        "@types/node": "20.8.7",
-        "@typescript-eslint/eslint-plugin": "6.8.0",
-        "@typescript-eslint/parser": "6.8.0",
-        "esbuild": "^0.19.4",
-        "eslint": "8.52.0",
-        "eslint-config-prettier": "9.0.0",
-        "eslint-plugin-prettier": "5.0.1",
-        "eslint-plugin-security": "1.7.1",
+        "@types/chrome": "0.0.263",
+        "@types/jest": "29.5.12",
+        "@types/node": "20.11.25",
+        "@typescript-eslint/eslint-plugin": "7.1.1",
+        "@typescript-eslint/parser": "7.1.1",
+        "esbuild": "0.20.1",
+        "eslint": "8.57.0",
+        "eslint-config-prettier": "9.1.0",
+        "eslint-plugin-prettier": "5.1.3",
+        "eslint-plugin-security": "2.1.1",
         "jest": "29.7.0",
-        "prettier": "3.0.3",
+        "prettier": "3.2.5",
         "rimraf": "5.0.5",
-        "web-ext": "7.9.0"
+        "web-ext": "7.11.0"
     }
 }
