@@ -50,7 +50,7 @@ We recommend to install the extension using the official browser stores listed i
 
 ```sh
 git clone https://github.com/cloudflare/pp-browser-extension
-nvm use 16
+nvm use 20
 npm ci
 npm run build
 ```
@@ -60,7 +60,7 @@ Once these steps complete, the `dist` folder will contain all files required to 
 ### Running Tests
 
 ```sh
-nvm use 16
+nvm use 20
 npm ci
 npm test
 ```
