@@ -4,12 +4,15 @@ import {
     handleBeforeSendHeaders,
     handleHeadersReceived,
     handleInstall,
+    handleStartup,
 } from '../../src/background';
 
 const BROWSER = BROWSERS.CHROME;
 const STORAGE = chrome.storage.local;
 
 chrome.runtime.onInstalled.addListener(handleInstall(STORAGE));
+
+chrome.runtime.onStartup.addListener(handleStartup(STORAGE));
 
 chrome.webRequest.onBeforeRequest.addListener(handleBeforeRequest(), { urls: ['<all_urls>'] }, [
     'blocking',

@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import { SERVICE_WORKER_MODE } from '../common';
+import { SERVICE_WORKER_MODE } from './settings';
 
 interface Logger {
     info: (...obj: unknown[]) => void; // Log an info level message

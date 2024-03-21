@@ -1,7 +1,7 @@
 import { keyToAttesterURI, refreshAttesterLookupByIssuerKey } from './attesters';
 import { SERVICE_WORKER_MODE, getRawSettings, getSettings } from '../common';
 import { BROWSERS, PRIVACY_PASS_API_REPLAY_HEADER, PRIVACY_PASS_API_REPLAY_URI } from './const';
-import { getLogger } from './logger';
+import { getLogger } from '../common/logger';
 import { fetchPublicVerifToken } from './pubVerifToken';
 import { REPLAY_STATE, getRequestID, setReplayDomainRule } from './replay';
 import { getAuthorizationRule, getIdentificationRule, removeAuthorizationRule } from './rules';
@@ -116,10 +116,28 @@ export const handleInstall =
         }
 
         // Refresh lookup of attester by issuer key lookup used for auto selection of attester
-        refreshAttesterLookupByIssuerKey(storage);
+        handleStartup(storage);
         getRequestID();
         setReplayDomainRule(REPLAY_STATE.NOT_FOUND);
     };
+
+export const handleStartup = (storage: chrome.storage.StorageArea) => async () => {
+    const { serviceWorkerMode: mode } = await getRawSettings(storage);
+    const logger = getLogger(mode);
+
+    const alarmName = 'refreshAttesterLookupByIssuerKey';
+    chrome.alarms.clear(alarmName);
+    chrome.alarms.create(alarmName, {
+        delayInMinutes: 0,
+        periodInMinutes: 24 * 60, // trigger once a day
+    });
+    chrome.alarms.onAlarm.addListener((alarm) => {
+        if (alarm.name === alarmName) {
+            logger.debug('refreshing attester lookup by issuer key');
+            refreshAttesterLookupByIssuerKey(storage);
+        }
+    });
+};
 
 const pendingRequests: Map<string, QueryablePromise<void>> = new Map();
 
