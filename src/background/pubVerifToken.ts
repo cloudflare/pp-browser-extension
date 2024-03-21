@@ -9,7 +9,11 @@ export async function fetchPublicVerifToken(
 
     const attesterToken: string = await new Promise((resolve) => {
         storage.onChanged.addListener(async (changes) => {
-            for (const [, { newValue }] of Object.entries(changes)) {
+            for (const [, value] of Object.entries(changes)) {
+                if (!value.newValue) {
+                    continue;
+                }
+                const newValue = value.newValue;
                 if (
                     newValue[originTabId] &&
                     newValue[originTabId].hasOwnProperty('attestationData') && // eslint-disable-line no-prototype-builtins
