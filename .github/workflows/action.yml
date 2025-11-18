@@ -6,14 +6,15 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-
+permissions:
+  contents: read
 jobs:
   testing:
     name: Running on Node v${{ matrix.node-version }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [20, 18]
+        node-version: [24, 22]
     steps:
       - name: Checking out
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
@@ -38,12 +39,12 @@ jobs:
       security-events: write
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3
+      uses: github/codeql-action/init@v4
       with:
         languages: javascript-typescript
     - name: Autobuild
-      uses: github/codeql-action/autobuild@v3
+      uses: github/codeql-action/autobuild@v4
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v3
+      uses: github/codeql-action/analyze@v4
