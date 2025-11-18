@@ -1,13 +1,15 @@
 on:
   pull_request: {}
   workflow_dispatch: {}
-  push: 
+  push:
     branches:
       - main
       - master
   schedule:
     - cron: '0 0 * * *'
 name: Semgrep config
+permissions:
+  contents: read
 jobs:
   semgrep:
     name: semgrep/ci
@@ -20,5 +22,5 @@ jobs:
     container:
       image: semgrep/semgrep
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: semgrep ci

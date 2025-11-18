@@ -26,7 +26,7 @@ export const rawSettingToSettingAttester = (attestersRaw: string): string[] => {
             try {
                 new URL(attester);
                 return true;
-            } catch (_) {
+            } catch {
                 return false;
             }
         });
