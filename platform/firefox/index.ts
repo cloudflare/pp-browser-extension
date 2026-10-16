@@ -1,5 +1,6 @@
 import {
     BROWSERS,
+    handleBeforeRequest,
     handleBeforeSendHeaders,
     handleHeadersReceived,
     handleInstall,
@@ -12,6 +13,10 @@ const STORAGE = browser.storage.local;
 chrome.runtime.onInstalled.addListener(handleInstall(STORAGE));
 
 chrome.runtime.onStartup.addListener(handleStartup(STORAGE));
+
+chrome.webRequest.onBeforeRequest.addListener(handleBeforeRequest(), { urls: ['<all_urls>'] }, [
+    'blocking',
+]);
 
 chrome.webRequest.onBeforeSendHeaders.addListener(
     handleBeforeSendHeaders(STORAGE),
